@@ -1,16 +1,41 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Agile Capacity Calculator</title>
-    <script src="popup.js"></script>
-  </head>
-  <body>
-    <h1>Capacity Calculator</h1>
-    <div><label>Days per Iteration: <input type="number" id="daysPerIteration" value="10"/></label></div>
-    <div><label>Works Hours per Day: <input type="number" id="workHoursPerDay" value="6"/></label></div>
-    <div><label>Holidays this Iteration: <input type="number" id="holidaysThisIteration" value="0"/></label></div>
-    <div><label>PTO this Iteration: <input type="number" id="ptoThisIteration" value="0"/></label></div>
-    <div><label>Allocation Percentage: <input type="number" id="allocationPercentage" value="100"/>%</label></div>
-    <div><button id="calculate">Calculate!</button></div>
-  </body>
+
+<head>
+  <title>Agile Capacity Calculator</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="popup.js"></script>
+</head>
+
+<body>
+  <h1>Capacity Calculator</h1>
+  <form class="pure-form pure-form-aligned">
+    <fieldset>
+      <div class="pure-control-group">
+        <label for="daysPerIteration">Days per Iteration: </label>
+          <input type="number" id="daysPerIteration" value="10"/>
+      </div>
+      <div class="pure-control-group">
+        <label for="workHoursPerDay">Works Hours per Day: </label>
+        <input type="number" id="workHoursPerDay" value="6"/>
+      </div>
+      <div class="pure-control-group">
+        <label for="holidaysThisIteration">Holidays this Iteration: </label>
+        <input type="number" id="holidaysThisIteration" value="0"/>
+      </div>
+      <div class="pure-control-group">
+        <label for="ptoThisIteration">PTO this Iteration: </label>
+        <input type="number" id="ptoThisIteration" value="0"/>
+      </div>
+      <div class="pure-control-group">
+        <label for="allocationPercentage">Allocation %: </label>
+        <input type="number" id="allocationPercentage" value="100"/>
+      </div>
+      <div class="pure-controls">
+        <button id="calculate"  class="pure-button pure-button-primary">Calculate!</button>
+      </div>
+    </fieldset>
+  </form>
+</body>
+
 </html>
