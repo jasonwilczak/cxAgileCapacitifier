@@ -1,20 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-  var calculateButton = document.getElementById('calculate');
-  calculateButton.addEventListener('click', function() {
-alert('hi');
-    // chrome.tabs.getSelected(null, function(tab) {
-    //   d = document;
+(function(){
+  var viewModel = {
+    iterationDays: getBasePropertyType('daysPerIteration'),
+    workHours: getBasePropertyType('workHoursPerDay'),
+    holidays: getBasePropertyType('holidaysThisIteration'),
+    pto: getBasePropertyType('ptoThisIteration'),
+    allocation: getBasePropertyType('allocatoinPercentage'),
+    capacity: getBasePropertyType('capacityHours')
+  };
+  function getBasePropertyType(elementId) {
+    return {
+      get: function () {
+        var element = getElement(elementId);
+        return ParseInt(element.value);
+      },
+      set: function (value) {
+        var element = getElement(elementId);
+        element.value = value;
 
-    //   var f = d.createElement('form');
-    //   f.action = 'http://gtmetrix.com/analyze.html?bm';
-    //   f.method = 'post';
-    //   var i = d.createElement('input');
-    //   i.type = 'hidden';
-    //   i.name = 'url';
-    //   i.value = tab.url;
-    //   f.appendChild(i);
-    //   d.body.appendChild(f);
-    //   f.submit();
-    // });
-  }, false);
+      }
+    }
+  }
+  function getElement(elementId) {
+    return document.getElementById(elementId);
+  }
+  function onCalculateClick() {
+    var workingIterationDays = (viewModel.iterationDays.get() - viewModel.holidays.get() - viewModel.pto.get());
+    workingIterationDays = workingIterationDays > 0 ? workingIterationDays : 0;
+    var workingHours = workingIterationDays * viewModel.workHours.get();
+    var percentageAvailable = (workingHours * viewModel.allocation.get()) / 100;
+    viewModel.capacity.set(percentageAvailable);
+  }
+document.addEventListener('DOMContentLoaded', function () {
+  
+  function init() {
+    var calculateButton = getElement('calculate');
+    calculateButton.addEventListener('click', onCalculateClick, false);
+  }
+  init();
 }, false);
+})();
+
