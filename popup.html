@@ -9,7 +9,7 @@
 
 <body>
   <h1>Capacity Calculator</h1>
-  <form class="pure-form pure-form-aligned">
+  <form id="capacityForm" class="pure-form pure-form-aligned">
     <fieldset>
       <div class="pure-control-group">
         <label for="daysPerIteration">Days per Iteration: </label>
@@ -32,7 +32,7 @@
         <input type="number" id="allocationPercentage" value=""/>
       </div>
       <div class="pure-controls">
-        <button id="calculate"  class="pure-button pure-button-primary">Calculate!</button>
+        <a type="button" id="calculate"  class="pure-button pure-button-primary">Calculate!</a>
         <input class="pure-rounded-input" readonly id="capacityResult" value=""/>
       </div>
     </fieldset>
