@@ -1,4 +1,4 @@
-(function(){
+(function () {
   var isLoaded = false;
   var viewModel = {
     iterationDays: getBasePropertyType('daysPerIteration'),
@@ -28,16 +28,16 @@
     var itDays = viewModel.iterationDays.get();
     var holidays = viewModel.holidays.get();
     var pto = viewModel.pto.get();
-    var workingIterationDays = (itDays-holidays-pto);
+    var workingIterationDays = (itDays - holidays - pto);
     workingIterationDays = workingIterationDays > 0 ? workingIterationDays : 0;
     var workHours = viewModel.workHours.get();
     var workingHours = workingIterationDays * workHours;
     var allocation = viewModel.allocation.get();
     var capacityAvailable = (workingHours * allocation) / 100;
-    viewModel.capacity.set(capacityAvailable+'hrs');
+    viewModel.capacity.set(capacityAvailable + 'hrs');
   }
   function setStartingInputs() {
-    if(isLoaded) return;
+    if (isLoaded) return;
     //check localstorage
     viewModel.iterationDays.set('10');
     viewModel.holidays.set('0');
@@ -47,14 +47,13 @@
     onCalculateClick();
     isLoaded = true;
   }
-  function init() 
-  {
-document.addEventListener('DOMContentLoaded', function () {
-    setStartingInputs();
-    var calculateButton = getElement('calculate');
-    calculateButton.addEventListener('click', onCalculateClick, false);
-  
-}, false);
+  function init() {
+    document.addEventListener('DOMContentLoaded', function () {
+      setStartingInputs();
+      var calculateButton = getElement('calculate');
+      calculateButton.addEventListener('click', onCalculateClick, false);
+
+    }, false);
   }
   init();
 })();
