@@ -1,9 +1,10 @@
 {
     "parserOptions": {
-        "ecmaVersion": 5
+        "ecmaVersion": 6
     },
     "env": {
-        "browser": true
+        "amd":true,
+        "shared-node-browser": true
     },
     "extends": "eslint:recommended",
     "rules": {

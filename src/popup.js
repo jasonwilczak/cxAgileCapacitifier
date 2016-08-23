@@ -1,3 +1,7 @@
+/*globals document, localStorage */
+'use strict';
+
+
 (function () {
 	var viewModel = buildViewModel();
 	function getBasePropertyType(elementId) {
