@@ -1,5 +1,5 @@
 # cxAgileCapacitifier
-Chrome Extension Agile tool to determine what your iteration/sprint capacity will be
+Chrome Extension Agile tool to determine what your iteration/sprint capacity will be: [See in Chrome Store](https://chrome.google.com/webstore/detail/agile-capacity-calculator/mfkaobjlalfbehnmeelanimajlpkppbe?utm_source=chrome-app-launcher-info-dialog)
 
 ![Travis Build Status](https://travis-ci.org/jasonwilczak/cxAgileCapacitifier.svg?branch=es6-imp)
 
