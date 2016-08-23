@@ -1,0 +1,25 @@
+{
+  "name": "cx_agile-capacitifier",
+  "version": "1.0.1",
+  "description": "A Chrome Extension that adds an Agile Capacity calculator for calculating your capacity during a given iteration or sprint.  ",
+  "main": "popup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonwilczak/cxAgileCapacitifier.git"
+  },
+  "keywords": [
+    "chrome",
+    "extensions",
+    "agile",
+    "calculator"
+  ],
+  "author": "Jason Wilczak",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jasonwilczak/cxAgileCapacitifier/issues"
+  },
+  "homepage": "https://github.com/jasonwilczak/cxAgileCapacitifier#readme"
+}
