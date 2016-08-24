@@ -5,7 +5,6 @@ module.exports = function(config) {
 		browsers: ['PhantomJS'],
 		frameworks: ['jasmine'],
 		files: [
-			'src/*spec.js',
 			'src/**/*spec.js'
 		]
 	});
