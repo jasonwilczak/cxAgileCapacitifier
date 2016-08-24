@@ -31,6 +31,8 @@
     "karma": "^1.2.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
-    "phantomjs-prebuilt": "^2.1.12"
+    "phantomjs-prebuilt": "^2.1.12",
+    "systemjs": "^0.19.37",
+    "systemjs-plugin-babel": "0.0.13"
   }
 }

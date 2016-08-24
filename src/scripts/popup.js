@@ -1,35 +1,11 @@
 /*globals document, localStorage */
 'use strict';
 
+import Utility from './utility';
+import ViewModel from './viewModel';
 
-(function () {
-	var viewModel = buildViewModel();
-	function getBasePropertyType(elementId) {
-		return {
-			get: function () {
-				var element = getElement(elementId);
-				return parseInt(element.value);
-			},
-			set: function (value) {
-				var element = getElement(elementId);
-				element.value = value;
-			}
-		};
-	}
-	function getElement(elementId) {
-		return document.getElementById(elementId);
-	}
-	function buildViewModel() {
-		return {
-			iterationDays: getBasePropertyType('daysPerIteration'),
-			workHours: getBasePropertyType('workHoursPerDay'),
-			holidays: getBasePropertyType('holidaysThisIteration'),
-			pto: getBasePropertyType('ptoThisIteration'),
-			allocation: getBasePropertyType('allocationPercentage'),
-			capacity: getBasePropertyType('capacityResult'),
-			isLoaded: false
-		};
-	}
+function popup() {
+	var viewModel = new ViewModel();
 	function onCalculateClick() {
 		var itDays = viewModel.iterationDays.get();
 		var holidays = viewModel.holidays.get();
@@ -62,12 +38,12 @@
 		viewModel.isLoaded = true;
 	}
 	function init() {
-		document.addEventListener('DOMContentLoaded', function () {
-			setStartingInputs();
-			var calculateButton = getElement('calculate');
-			calculateButton.addEventListener('click', onCalculateClick, false);
-		}, false);
+		setStartingInputs();
+		var calculateButton = Utility.getElement('calculate');
+		calculateButton.addEventListener('click', onCalculateClick, false);
 	}
 	init();
-})();
+}
+
+export default popup();
 

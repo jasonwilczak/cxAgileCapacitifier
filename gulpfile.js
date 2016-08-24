@@ -27,7 +27,7 @@ gulp.task('default',()=>{
 });
 gulp.task('lint',()=>{
 	log('Starting linting...');
-	return gulp.src(['src/*.js','src/**/*.js'])
+	return gulp.src(['src/*.js'])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
