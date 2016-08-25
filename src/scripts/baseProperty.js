@@ -1,6 +1,6 @@
 'use strict';
 
-import Utility from './utility';
+import Utility from './utility.js';
 
 export default class BaseProperty {
 	constructor(elementId) {

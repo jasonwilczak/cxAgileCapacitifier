@@ -1,8 +1,8 @@
 /*globals document, localStorage */
 'use strict';
 
-import Utility from './utility';
-import ViewModel from './viewModel';
+import Utility from './utility.js';
+import ViewModel from './viewModel.js';
 
 function popup() {
 	var viewModel = new ViewModel();

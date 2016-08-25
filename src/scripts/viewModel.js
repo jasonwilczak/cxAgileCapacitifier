@@ -1,6 +1,6 @@
 'use strict';
 
-import BaseProperty from './baseProperty';
+import BaseProperty from './baseProperty.js';
 
 export default class ViewModel {
 	constructor() {
