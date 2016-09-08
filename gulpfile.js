@@ -8,11 +8,13 @@ const eslint = require('gulp-eslint');
 const clean = require('gulp-clean');
 const fs = require('fs');
 const jsonFile = require('jsonfile');
+const Builder = require('systemjs-builder');
+const path = require('path');
 
 const filesToMove = [
 	'./src/content/**/*',
-	'./src/scripts/*.js',
-	'!./src/scripts/*spec.js',
+	'!./src/scripts/.js',
+	'!./src/scripts/**/*.js',
 	'./src/manifest.json',
 	'./src/icon.png',
 	'./src/popup.html'
@@ -42,7 +44,7 @@ gulp.task('watch',(done)=>{
 });
 gulp.task('clean',()=>{
 	log('Cleaning dist folder...');
-	return gulp.src(['dist/*'], {read:false})
+	return gulp.src(['dist/*','!dist/*.js'], {read:false})
   .pipe(clean());
 });
 gulp.task('move',['clean'],()=>{
@@ -50,14 +52,23 @@ gulp.task('move',['clean'],()=>{
 	gulp.src(filesToMove, { base: './src/' })
   .pipe(gulp.dest('dist'));
 });
-gulp.task('build',['move'],()=>{
+gulp.task('build',['clean'],()=>{
 	log('Starting build process...');
-
+	let builder = new Builder();
+	builder.config({
+		baseUrl: './src/scripts',
+		map: {
+			'plugin-babel': 'src/scripts/libs/systemjs-plugin-babel/plugin-babel.js',
+			'systemjs-babel-build': 'src/scripts/libs/systemjs-plugin-babel/systemjs-babel-browser.js',
+		},
+		transpiler: 'plugin-babel',
+	});
+	builder.buildStatic('src/scripts/popup.js','dist/scripts/popup.js',{sourceMaps:true,runtime:false});
 });
-gulp.task('build-minor',['increment-version-minor','build'],()=>{
+gulp.task('build-minor',['increment-version-minor','build','move'],()=>{
 	log('Building minor version');
 });
-gulp.task('build-major',['increment-version-major','build'],()=>{
+gulp.task('build-major',['increment-version-major','build','move'],()=>{
 	log('Building major version');
 });
 gulp.task('increment-version-minor', ()=>{
