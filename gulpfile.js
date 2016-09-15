@@ -9,13 +9,11 @@ const clean = require('gulp-clean');
 const fs = require('fs');
 const jsonFile = require('jsonfile');
 const Builder = require('systemjs-builder');
-var htmlreplace = require('gulp-html-replace');
-
+const htmlreplace = require('gulp-html-replace');
+const less = require('gulp-less');
+const concatCss = require('gulp-concat-css');
 
 const filesToMove = [
-	'./src/content/**/*',
-	'!./src/scripts/.js',
-	'!./src/scripts/**/*.js',
 	'./src/manifest.json',
 	'./src/icon.png'
 ];
@@ -37,11 +35,24 @@ gulp.task('lint',()=>{
 gulp.task('test',['lint'],(done)=>{
 	log('Starting testing...');
 	karmaServerOptions.singleRun = true;
-	new KarmaServer(karmaServerOptions, done).start();
+	karmaServerStart(done);
 });
 gulp.task('watch',(done)=>{
-	new KarmaServer(karmaServerOptions, done).start();
+	log('starting watch');
+	karmaServerStart(done);
+	compileCss();
 });
+gulp.task('css',()=>{
+	return compileCss();
+});
+function compileCss() {
+	return gulp.src('src/content/styles/*.less')
+    .pipe(less({paths: [ '.' ],compress:true,filename:'main.less' }))
+    .pipe(gulp.dest('./src/content/styles/'));
+}
+function karmaServerStart(done) {
+	new KarmaServer(karmaServerOptions, done).start();
+}
 gulp.task('clean',()=>{
 	log('Cleaning dist folder...');
 	return gulp.src(['dist/*'], {read:false})
@@ -51,6 +62,12 @@ gulp.task('move',['clean'],()=>{
 	log('Moving files from src to dist');
 	gulp.src(filesToMove, { base: './src/' })
   .pipe(gulp.dest('dist'));
+});
+gulp.task('build-css',['clean'],()=>{
+	return gulp.src('src/content/**/*.css')
+    .pipe(concatCss('popup.css'))
+    .pipe(gulp.dest('dist/content/styles/'));
+
 });
 gulp.task('build-js',['clean'],()=>{
 	log('Starting build process for js...');
@@ -69,16 +86,17 @@ gulp.task('build-html',['clean'],()=>{
 	log('Starting build process for html...');
 	return gulp.src('./src/popup.html', { base: './src/' })
 		.pipe(htmlreplace({
+			'css': './content/styles/popup.css',
 			'js': './scripts/popup.min.js'
 		}))
 		.pipe(gulp.dest('dist'));
 });
-gulp.task('build',['build-js','build-html'],()=>{log('building...');});
+gulp.task('build',['build-js','build-html','build-css'],()=>{log('building...');});
 gulp.task('deploy',['build','move'],()=>{log('Deploying...');});
 gulp.task('build-minor',['increment-version-minor','deploy'],()=>{
 	log('Building minor version');
 });
-gulp.task('build-major',['increment-version-major','clean','build-js','build-html','move'],()=>{
+gulp.task('build-major',['increment-version-major','deploy'],()=>{
 	log('Building major version');
 });
 gulp.task('increment-version-minor', ()=>{

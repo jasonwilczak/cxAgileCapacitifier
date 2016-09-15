@@ -10,6 +10,10 @@ function popup() {
 		viewModel.save();
 		return false;
 	}
+	function onResetClick() {
+		viewModel.resetToDefaults();
+		viewModel.save();
+	}
 	function setStartingInputs() {
 		if (viewModel.isLoaded) return;
 		viewModel.initialize();
@@ -20,6 +24,8 @@ function popup() {
 		setStartingInputs();
 		var calculateButton = Utility.getElement('calculate');
 		calculateButton.addEventListener('click', onCalculateClick, false);
+		var resetButton = Utility.getElement('reset');
+		resetButton.addEventListener('click', onResetClick, false);
 	}
 	init();
 }

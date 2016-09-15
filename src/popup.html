@@ -3,12 +3,15 @@
 
 <head>
   <title>Agile Capacity Calculator</title>
-  <link rel="stylesheet" href="./content/styles/popup.css">  
+  <!-- build:css -->
+  <link rel="stylesheet" href="./content/styles/libs/pureform.css">
+  <link rel="stylesheet" href="./content/styles/main.css">
+  <!-- endbuild -->  
 </head>
 
 <body>
   <h1>Capacity Calculator</h1>
-  <form id="capacityForm" class="pure-form pure-form-aligned">
+  <form id="capacityForm" class="pure-form pure-form-stacked">
     <fieldset>
       <div class="pure-control-group">
         <label for="daysPerIteration">Days per Iteration: </label>
@@ -31,7 +34,10 @@
         <input type="number" id="allocationPercentage" value=""/>
       </div>
       <div class="pure-controls">
+        <a type="button" id="reset" class="pure-button pure-button-secondary">Reset</a>
         <a type="button" id="calculate"  class="pure-button pure-button-primary">Calculate!</a>
+      </div>
+      <div class="pure-controls">
         <input class="pure-rounded-input" readonly id="capacityResult" value=""/>
       </div>
     </fieldset>

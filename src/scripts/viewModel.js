@@ -33,6 +33,13 @@ export default class ViewModel {
 		var capacityAvailable = (workingHours * allocation) / 100;
 		this.capacity.set(capacityAvailable + 'hrs');
 	}
+	resetToDefaults() {
+		this.iterationDays.set('10');
+		this.holidays.set('0');
+		this.pto.set('0');
+		this.workHours.set('6');
+		this.allocation.set('100');
+	}
 	initialize() {
 		this.iterationDays.set(localStorage.getItem('iterationDays') || '10');
 		this.holidays.set(localStorage.getItem('holidays') || '0');
