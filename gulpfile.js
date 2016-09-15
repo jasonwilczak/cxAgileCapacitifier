@@ -9,15 +9,15 @@ const clean = require('gulp-clean');
 const fs = require('fs');
 const jsonFile = require('jsonfile');
 const Builder = require('systemjs-builder');
-const path = require('path');
+var htmlreplace = require('gulp-html-replace');
+
 
 const filesToMove = [
 	'./src/content/**/*',
 	'!./src/scripts/.js',
 	'!./src/scripts/**/*.js',
 	'./src/manifest.json',
-	'./src/icon.png',
-	'./src/popup.html'
+	'./src/icon.png'
 ];
 let karmaServerOptions = {
 	configFile: __dirname + '/karma.conf.js'
@@ -44,7 +44,7 @@ gulp.task('watch',(done)=>{
 });
 gulp.task('clean',()=>{
 	log('Cleaning dist folder...');
-	return gulp.src(['dist/*','!dist/*.js'], {read:false})
+	return gulp.src(['dist/*'], {read:false})
   .pipe(clean());
 });
 gulp.task('move',['clean'],()=>{
@@ -52,8 +52,8 @@ gulp.task('move',['clean'],()=>{
 	gulp.src(filesToMove, { base: './src/' })
   .pipe(gulp.dest('dist'));
 });
-gulp.task('build',['clean'],()=>{
-	log('Starting build process...');
+gulp.task('build-js',['clean'],()=>{
+	log('Starting build process for js...');
 	let builder = new Builder();
 	builder.config({
 		baseUrl: './src/scripts',
@@ -63,12 +63,22 @@ gulp.task('build',['clean'],()=>{
 		},
 		transpiler: 'plugin-babel',
 	});
-	builder.buildStatic('src/scripts/popup.js','dist/scripts/popup.js',{sourceMaps:true,runtime:false});
+	builder.buildStatic('src/scripts/popup.js','dist/scripts/popup.min.js',{minify:true});
 });
-gulp.task('build-minor',['increment-version-minor','build','move'],()=>{
+gulp.task('build-html',['clean'],()=>{
+	log('Starting build process for html...');
+	return gulp.src('./src/popup.html', { base: './src/' })
+		.pipe(htmlreplace({
+			'js': './scripts/popup.min.js'
+		}))
+		.pipe(gulp.dest('dist'));
+});
+gulp.task('build',['build-js','build-html'],()=>{log('building...');});
+gulp.task('deploy',['build','move'],()=>{log('Deploying...');});
+gulp.task('build-minor',['increment-version-minor','deploy'],()=>{
 	log('Building minor version');
 });
-gulp.task('build-major',['increment-version-major','build','move'],()=>{
+gulp.task('build-major',['increment-version-major','clean','build-js','build-html','move'],()=>{
 	log('Building major version');
 });
 gulp.task('increment-version-minor', ()=>{
