@@ -3,8 +3,7 @@
 
 <head>
   <title>Agile Capacity Calculator</title>
-  <link rel="stylesheet" href="./content/styles/popup.css">
-  <script src="./scripts/popup.js"></script>
+  <link rel="stylesheet" href="./content/styles/popup.css">  
 </head>
 
 <body>
@@ -37,6 +36,12 @@
       </div>
     </fieldset>
   </form>
+
+  <!-- build:js -->
+  <script src="./scripts/libs/system.js"></script>
+  <script src="./system.config.js"></script>
+  <script>System.import('./scripts/popup.js');</script>
+  <!-- endbuild -->
 </body>
 
 </html>
